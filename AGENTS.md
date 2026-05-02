@@ -24,6 +24,5 @@ This checks 3 rules: `license-file-is-MIT`, `readme-file-exists`, and `codeowner
 
 ### Gotchas
 
-- `config/repolinter-ruleset.json` has a trailing comma on line 65 (closing `codeowners-file-exists`) which is technically invalid JSON, but repolinter parses it without error.
 - `CONTRIBUTING.md` references `script/bootstrap` and `script/cibuild` — these scripts do **not** exist in this repo and are generic placeholder instructions.
 - Repolinter's `fix` actions may auto-create files (e.g. CODEOWNERS) when rules fail — be aware of untracked files after a lint run.
