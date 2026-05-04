@@ -1,28 +1,20 @@
-# AGENTS.md
-
 ## Cursor Cloud specific instructions
 
-This is GitHub's `.github` meta-repository containing default community health files (README, CODE_OF_CONDUCT, CONTRIBUTING, SECURITY) and a repolinter configuration. There is **no application code, no build system, no tests, and no package dependencies**.
+This is GitHub's `.github` organization-level meta-repository. It contains **no application code** — only Markdown community health files (`README.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SECURITY.md`, `profile/README.md`) and a `config/repolinter-ruleset.json` configuration.
 
-### What this repo contains
+### Linting
 
-- `README.md` / `profile/README.md` — Organization description and profile page
-- `CODE_OF_CONDUCT.md` — Contributor Covenant v2.1
-- `CONTRIBUTING.md` — Default contributing guidelines
-- `SECURITY.md` — Security vulnerability reporting policy
-- `config/repolinter-ruleset.json` — Repolinter rules enforcing LICENSE, README, and CODEOWNERS file presence
+The only tool that actually runs in this repo is [repolinter](https://github.com/todogroup/repolinter), which validates repos against policy rules defined in `config/repolinter-ruleset.json`. (`CONTRIBUTING.md` also references `script/bootstrap` and `script/cibuild`, but those are placeholder instructions and do not exist.)
 
-### Running repolinter (the only tool)
-
-Repolinter is the only tooling referenced by this repo. To lint the repo against its ruleset:
-
-```sh
-repolinter lint --rulesetFile config/repolinter-ruleset.json
+Run it with:
 ```
+repolinter lint --rulesetFile config/repolinter-ruleset.json --dryRun .
+```
+
+Use `--dryRun` to avoid auto-creating fix files (e.g. a `CODEOWNERS` file). Without `--dryRun`, repolinter will apply fixes and create files in the working directory.
 
 This checks 3 rules: `license-file-is-MIT`, `readme-file-exists`, and `codeowners-file-exists`.
 
-### Gotchas
+### No build, no tests, no dev server
 
-- `CONTRIBUTING.md` references `script/bootstrap` and `script/cibuild` — these scripts do **not** exist in this repo and are generic placeholder instructions.
-- Repolinter's `fix` actions may auto-create files (e.g. CODEOWNERS) when rules fail — be aware of untracked files after a lint run.
+There are no dependencies, no test suite, no build step, and no dev server to run. Changes are Markdown-only and can be validated visually or with repolinter.
