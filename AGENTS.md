@@ -1,19 +1,24 @@
+# AGENTS.md
+
 ## Cursor Cloud specific instructions
 
-This is GitHub's `.github` organization-level meta-repository. It contains **no application code** — only Markdown community health files (`README.md`, `CODE_OF_CONDUCT.md`, `CONTRIBUTING.md`, `SECURITY.md`, `profile/README.md`) and a `config/repolinter-ruleset.json` configuration.
+This is a GitHub organization `.github` repository containing community health files (Markdown docs and a repolinter config). There is no application code, no build step, and no services to run.
 
-### Linting
+### Repository contents
 
-The only tool that actually runs in this repo is [repolinter](https://github.com/todogroup/repolinter), which validates repos against policy rules defined in `config/repolinter-ruleset.json`. (`CONTRIBUTING.md` also references `script/bootstrap` and `script/cibuild`, but those are placeholder instructions and do not exist.)
+- `README.md`, `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, `SECURITY.md` — community health files
+- `profile/README.md` — GitHub organization profile page
+- `config/repolinter-ruleset.json` — repolinter rules for enforcing repo standards (MIT license, README, CODEOWNERS)
 
-Run it with:
-```
-repolinter lint --rulesetFile config/repolinter-ruleset.json --dryRun .
-```
+### Available dev tools
 
-Use `--dryRun` to avoid auto-creating fix files (e.g. a `CODEOWNERS` file). Without `--dryRun`, repolinter will apply fixes and create files in the working directory.
+- **repolinter**: `repolinter lint --rulesetFile config/repolinter-ruleset.json --dryRun .` — runs repo policy checks using the custom ruleset. Use `--dryRun` to avoid auto-creating fix files (e.g. a `CODEOWNERS` file). The ruleset checks 3 rules: `license-file-is-MIT`, `readme-file-exists`, and `codeowners-file-exists`.
+- **markdownlint**: `markdownlint '*.md' 'profile/*.md'` — lints Markdown files (many pre-existing warnings are expected)
 
-This checks 3 rules: `license-file-is-MIT`, `readme-file-exists`, and `codeowners-file-exists`.
+### Known issues
+
+- `CONTRIBUTING.md` references `script/bootstrap` and `script/cibuild` commands that do not exist in this repository — they are generic placeholder instructions.
+- Running `repolinter lint` without `--dryRun` may invoke fix rules (e.g. `codeowners-file-exists` will overwrite `CODEOWNERS`, `license-file-is-MIT` will overwrite `LICENSE`). Both files are tracked in this repo, so if a fix run mutates them unintentionally, restore the original with `git restore CODEOWNERS LICENSE` rather than `rm`-ing tracked files. Use `--dryRun` to avoid this.
 
 ### No build, no tests, no dev server
 
