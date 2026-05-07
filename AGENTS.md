@@ -17,10 +17,8 @@ This is a GitHub organization `.github` repository containing community health f
 
 ### Known issues
 
-- `config/repolinter-ruleset.json` has a trailing comma on the last rule entry (line 65-66), which makes it invalid strict JSON. Repolinter's parser handles it, but `JSON.parse()` and `python3 json.load()` will fail. Do not attempt to "fix" this unless explicitly asked.
 - `CONTRIBUTING.md` references `script/bootstrap` and `script/cibuild` commands that do not exist in this repository — they are generic placeholder instructions.
-- Repolinter's `license-file-is-MIT` rule will flag a warning because this repo has no LICENSE file (expected for an org-level `.github` repo).
-- Running `repolinter lint` without `--dryRun` may auto-create a `CODEOWNERS` file via its fix rule. Clean up with `rm -f CODEOWNERS` if this happens unintentionally.
+- Running `repolinter lint` without `--dryRun` may invoke fix rules (e.g. `codeowners-file-exists` will overwrite `CODEOWNERS`, `license-file-is-MIT` will overwrite `LICENSE`). Both files are tracked in this repo, so if a fix run mutates them unintentionally, restore the original with `git restore CODEOWNERS LICENSE` rather than `rm`-ing tracked files. Use `--dryRun` to avoid this.
 
 ### No build, no tests, no dev server
 
