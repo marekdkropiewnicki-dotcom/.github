@@ -18,7 +18,7 @@ This is a GitHub organization `.github` repository containing community health f
 ### Known issues
 
 - `CONTRIBUTING.md` references `script/bootstrap` and `script/cibuild` commands that do not exist in this repository — they are generic placeholder instructions.
-- Running `repolinter lint` without `--dryRun` may invoke fix rules (e.g. `codeowners-file-exists` will overwrite `CODEOWNERS`, `license-file-is-MIT` will overwrite `LICENSE`). Both files are tracked in this repo, so if a fix run mutates them unintentionally, restore the original with `git restore CODEOWNERS LICENSE` rather than `rm`-ing tracked files. Use `--dryRun` to avoid this.
+- Running `repolinter lint` without `--dryRun` may invoke fix rules (e.g. `codeowners-file-exists` will create `CODEOWNERS` if it is missing, `license-file-is-MIT` will overwrite `LICENSE`). Both files are tracked in this repo, so if a fix run mutates them unintentionally, restore the original with `git restore CODEOWNERS LICENSE` rather than `rm`-ing tracked files. Use `--dryRun` to avoid this.
 
 ### No build, no tests, no dev server
 
